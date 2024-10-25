@@ -1,21 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
-import Content from './component/Content'
-import JSXPractice from './component/JSXPractice';
-import Nav from './component/Nav';
-import Subject from './component/Subject';
+import Header from './component/Header';
+import Sidebar from './component/Sidebar';
+import FeaturedSection from './component/FeaturedSection';
+import Footer from './component/Footer';
 
 function App() {
   return (
     <div className="App">
-      <JSXPractice/>
-      <hr/>
-      <h1>안녕하세요..</h1>
-      <Subject> </Subject>
-      <hr/>
-      <Nav/>
-      <hr/>
-      <Content/>
+      <Header/>
+      <Sidebar/>
+      <FeaturedSection/>
+      <Footer/>
     </div>
   );
 }

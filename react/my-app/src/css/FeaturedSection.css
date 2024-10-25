@@ -1,0 +1,49 @@
+/* Recommended 섹션 스타일 */
+.recommended-content {
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.recommended-content h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.recommended-content .content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.recommended-content article {
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.recommended-content article h3 {
+    font-size: 20px;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.recommended-content article p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* Responsive 스타일 */
+@media (min-width: 600px) {
+    .recommended-content .content {
+        flex-direction: row;
+        gap: 20px;
+    }
+}
