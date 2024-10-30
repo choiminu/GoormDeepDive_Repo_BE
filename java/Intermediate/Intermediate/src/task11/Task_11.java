@@ -11,15 +11,13 @@ public class Task_11 {
         System.out.println(Arrays.toString(arr));
     }
 
-    public static void sort(int[] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr.length; j++) {
-                if (arr[i] < arr[j]) {
-                    int temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
-                }
+    public class TurnCountValidator {
+        public static int validateTurnCount(String turnCount) {
+            int intTurnCount = Integer.parseInt(turnCount);
+            if (intTurnCount < 1) {
+                throw new IllegalArgumentException(ErrorMessage.INVALID_INT_NUMBER.getMessage());
             }
+            return intTurnCount;
         }
     }
 }
