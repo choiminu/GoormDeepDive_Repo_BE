@@ -9,21 +9,23 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @SpringBootApplication
+@EnableAspectJAutoProxy
 public class MyBoardApplication {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext applicationContext = SpringApplication.run(MyBoardApplication.class, args);
 
-        ProtoTypeBean protoBean = applicationContext.getBean("protoTypeBean", ProtoTypeBean.class);
-        System.out.println("protoBean = " + protoBean);
+//        ProtoTypeBean protoBean = applicationContext.getBean("protoTypeBean", ProtoTypeBean.class);
+//        System.out.println("protoBean = " + protoBean);
+//
+//        SingletonBean singletonBean = applicationContext.getBean("singletonBean", SingletonBean.class);
+//        System.out.println("singletonBean = " + singletonBean);
 
-        SingletonBean singletonBean = applicationContext.getBean("singletonBean", SingletonBean.class);
-        System.out.println("singletonBean = " + singletonBean);
-
-//        ExpController expController = applicationContext.getBean("expController", ExpController.class);
-//        expController.call();
+        ExpController expController = applicationContext.getBean("expController", ExpController.class);
+        expController.call();
     }
 }
