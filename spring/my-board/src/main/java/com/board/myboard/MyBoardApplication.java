@@ -1,9 +1,7 @@
 package com.board.myboard;
 
-import com.board.myboard.task.bean.ExpController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @SpringBootApplication
@@ -11,9 +9,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 public class MyBoardApplication {
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext applicationContext = SpringApplication.run(MyBoardApplication.class, args);
-
-        ExpController expController = applicationContext.getBean("expController", ExpController.class);
-        expController.call();
+        SpringApplication.run(MyBoardApplication.class, args);
     }
 }

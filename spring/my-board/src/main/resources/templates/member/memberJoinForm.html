@@ -93,7 +93,6 @@
     <div class="window-body" style="color: black;">
         <form class="signup-form" th:action th:object="${form}" method="post" enctype="multipart/form-data">
             <div class="field-row-stacked" style="width: 230px">
-                <label for="text22">ID:</label>
                 <input type="text" class="form-control" id="id" name="id" th:field="*{loginId}" th:errorclass="field-error"
                        placeholder="admin">
                 <div class="field-error" th:errors="*{loginId}"></div>
@@ -105,9 +104,9 @@
             </div>
             <div class="field-row-stacked" style="width: 230px">
                 <label for="name">Name:</label>
-                <input type="text" class="form-control" id="name" name="name" th:field="*{name}" th:errorclass="field-error"
+                <input type="text" class="form-control" id="name" name="name" th:field="*{nickName}" th:errorclass="field-error"
                        placeholder="neo">
-                <div class="field-error" th:errors="*{name}"></div>
+                <div class="field-error" th:errors="*{nickName}"></div>
             </div>
             <button type="submit" class="" style="width: 230px; margin-bottom: 10px; margin-top: 5px;">가입하기</button>
             <a href="#" th:href="@{/}" class="" style="margin-left: 40px; margin-top: 20px;">이미 계정이 있으신가요? 로그인</a>

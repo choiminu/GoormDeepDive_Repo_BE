@@ -41,6 +41,12 @@
             color: #fff;
         }
 
+
+        .btn-login {
+            background-color: #007bff;
+            color: #fff;
+        }
+
         .btn-logout:hover {
             background-color: #c9302c;
         }
@@ -50,7 +56,7 @@
             color: #fff;
         }
 
-        .btn-profile:hover, .btn-settings:hover {
+        .btn-profile:hover, .btn-settings:hover, .btn-login:hover {
             background-color: #0056b3;
         }
     </style>
@@ -69,12 +75,24 @@
     <div class="window-body" style="color: black;">
         <div class="home-container">
             <h2>환영합니다, 사용자님!</h2>
-            <p>로그인에 성공했습니다.</p>
+
+            <p th:if="${member != null}">로그인에 성공했습니다.</p>
+
             <div class="button-group">
-                <button class="btn-profile" onclick="location.href='/profile'">프로필 보기</button>
-                <button class="btn-settings" onclick="location.href='/settings'">설정</button>
-                <button class="btn-logout" onclick="location.href='/logout'">로그아웃</button>
+                <!-- 로그인된 경우 -->
+                <div th:if="${member != null}">
+                    <button class="btn-profile" onclick="location.href='/profile'">프로필 보기</button>
+                    <button class="btn-settings" onclick="location.href='/settings'">설정</button>
+                    <button class="btn-logout" onclick="location.href='/logout'">로그아웃</button>
+                </div>
+
+                <!-- 로그인되지 않은 경우 -->
+                <div th:if="${member == null}">
+                    <button class="btn_login" onclick="location.href='/login'">로그인</button>
+                    <button class="btn_join" onclick="location.href='/join'">회원가입</button>
+                </div>
             </div>
+
         </div>
     </div>
 </div>
