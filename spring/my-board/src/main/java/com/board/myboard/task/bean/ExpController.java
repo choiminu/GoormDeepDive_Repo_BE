@@ -1,4 +1,4 @@
-package com.board.myboard.bean;
+package com.board.myboard.task.bean;
 
 
 import lombok.RequiredArgsConstructor;

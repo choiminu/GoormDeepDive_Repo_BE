@@ -1,4 +1,4 @@
-package com.board.myboard.aop;
+package com.board.myboard.task.aop;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

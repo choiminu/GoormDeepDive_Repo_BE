@@ -1,8 +1,6 @@
 package com.board.myboard;
 
-import com.board.myboard.bean.ExpController;
-import com.board.myboard.bean.ExpService;
-import com.board.myboard.bean.ExpServiceImpl;
+import com.board.myboard.task.bean.ExpController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;

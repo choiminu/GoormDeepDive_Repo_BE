@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/98.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap">
+    <title>Home</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: silver;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .home-container {
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .home-container h2 {
+            color: #333;
+        }
+
+        .button-group button {
+            width: 100%;
+            margin: 5px 0;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-logout {
+            background-color: #d9534f;
+            color: #fff;
+        }
+
+        .btn-logout:hover {
+            background-color: #c9302c;
+        }
+
+        .btn-profile, .btn-settings {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .btn-profile:hover, .btn-settings:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="window" style="width: 250px;">
+    <div class="title-bar">
+        <div class="title-bar-text">Home</div>
+        <div class="title-bar-controls">
+            <button aria-label="Minimize"></button>
+            <button aria-label="Maximize"></button>
+            <button aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="window-body" style="color: black;">
+        <div class="home-container">
+            <h2>환영합니다, 사용자님!</h2>
+            <p>로그인에 성공했습니다.</p>
+            <div class="button-group">
+                <button class="btn-profile" onclick="location.href='/profile'">프로필 보기</button>
+                <button class="btn-settings" onclick="location.href='/settings'">설정</button>
+                <button class="btn-logout" onclick="location.href='/logout'">로그아웃</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-package com.board.myboard.bean.scope;
+package com.board.myboard.task.bean.scope;
 
 import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
