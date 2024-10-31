@@ -2,7 +2,9 @@ package com.board.myboard.bean;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 
+@Controller
 @RequiredArgsConstructor
 public class ExpController {
 
