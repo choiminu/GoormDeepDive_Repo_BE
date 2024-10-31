@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/98.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <title>New Post</title>
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: silver;
+            color: #fff;
+        }
+
+        .title {
+            font-size: 20px;
+        }
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        a:hover{
+            text-decoration: underline;
+        }
+        .post_list :hover{
+            background-color: #eaeaea;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="title" style="height: 100px; position:relative;">
+    <div class="window"
+         style="margin: 32px; width: 150px; overflow: hidden; word-break: break-word; position: absolute; right: 230px">
+        <div class="title-bar">
+            <div class="title-bar-text">
+                User Info
+            </div>
+            <div class="title-bar-controls">
+                <button aria-label="Maximize"></button>
+                <form action="/user/logout" method="post">
+                    <button aria-label="Close"></button>
+                </form>
+            </div>
+        </div>
+        <div class="window-body" style="color: black; margin-left:23px;">
+            <a style="text-decoration:none; color: #00f" th:text="${loginMember != null ? loginMember.getName() : '비회원'}"
+               th:href="@{/user/edit}">비회원</a> 님 반갑습니다.
+        </div>
+    </div>
+
+</div>
+
+
+<div class="" style="max-width: 1200px; margin: 0px auto; position: relative;">
+    <menu role="tablist" style="">
+        <li role="tab" aria-selected="true"><a href="/posts">board</a></li>
+        <li role="tab"><a href="#tabs">My computer</a></li>
+        <li role="tab"><a href="#tabs">Control panel</a></li>
+        <li role="tab"><a href="#tabs">Devices manager</a></li>
+        <li role="tab"><a href="#tabs">Hardware profiles</a></li>
+        <li role="tab"><a href="#tabs">Performance</a></li>
+    </menu>
+    <div class="window" role="tabpanel">
+        <div class="window-body" style="overflow: hidden;">
+            <div class="sunken-panel" style="max-height: 600px; width: 1200px; margin: 0 auto;">
+                <table class="interactive">
+                    <thead>
+                    <tr style="color: black; font-size: 13px">
+                        <th style="width: 200px; height: 30px; text-align: center">id</th>
+                        <th style="width: 650px; height: 30px; text-align: center">title</th>
+                        <th style="width: 100px; height: 30px; text-align: center">author</th>
+                        <th style="width: 180px; height: 30px; text-align: center">date</th>
+                        <th style="width: 46px; height: 30px; text-align: center">views</th>
+                    </tr>
+                    </thead>
+                    <tbody class="post_list">
+                    <tr style="color: black; text-align: center;" th:each="post : ${posts}"
+                        th:href="@{/posts/{postId}(postId = ${post.id})}">
+                        <td style="height: 30px; border-bottom:1px solid #bebebe;"><a
+                                th:href="@{/posts/{postId}(postId = ${post.id})}" th:text="${post.id}">1</a></td>
+                        <td style="height: 30px; border-bottom:1px solid #bebebe;"><a
+                                th:href="@{/posts/{postId}(postId = ${post.id})}" th:text="${post.title}">3.51.11.00</a>
+                        </td>
+                        <td style="height: 30px; border-bottom:1px solid #bebebe;"><a
+                                th:href="@{/posts/{postId}(postId = ${post.id})}" th:text="${post.createBy}">MySQL
+                            AB</a></td>
+                        <td style="height: 30px; border-bottom:1px solid #bebebe;" th:text="${post.createAt}">1</td>
+                        <td style="height: 30px; border-bottom:1px solid #bebebe;">1</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <script>
+                document.querySelectorAll('table.interactive').forEach(element => {
+                    element.addEventListener('click', (event) => {
+                        const row = event.path.find(element => element.tagName === 'TR' && element.parentElement.tagName === 'TBODY');
+                        if (row) {
+                            row.classList.toggle('highlighted');
+                        }
+                    })
+                });
+            </script>
+        </div>
+        <div class="post-button" style="position: absolute; right:0; margin-top: 10px;">
+            <button type="button" th:onclick="|location.href='@{/posts/add}'|"
+                    style="margin-right: 0px">글쓰기
+            </button>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
