@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="expService" class="com.board.myboard.bean.ExpService"/>
+    <bean id="expService" class="com.board.myboard.bean.ExpServiceImpl"/>
 
     <bean id="expController" class="com.board.myboard.bean.ExpController">
         <constructor-arg ref="expService"/>

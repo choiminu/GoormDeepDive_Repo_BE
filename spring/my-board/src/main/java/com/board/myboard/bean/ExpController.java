@@ -8,10 +8,11 @@ import org.springframework.stereotype.Controller;
 @RequiredArgsConstructor
 public class ExpController {
 
-    private final ExpService expService;
+    private final ExpServiceImpl expServiceImpl;
+
 
     public void call() {
-        expService.logic("민우", 100);
+        expServiceImpl.logic("민우", 100);
     }
 
 }
