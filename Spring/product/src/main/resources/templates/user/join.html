@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>회원가입</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .signup-container {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+        }
+        .signup-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-group input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .field-error{
+            color: red;
+            font-size: 11px;
+            margin-left: 5px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="signup-container">
+    <h2>회원가입</h2>
+    <form th:action th:method="post" enctype="multipart/form-data" th:object="${join}">
+        <div class="form-group">
+            <label for="loginId">아이디</label>
+            <input type="text" id="loginId" name="loginId" placeholder="아이디를 입력하세요" th:field="*{loginId}">
+            <p th:class="field-error" th:errors="*{loginId}">오류</p>
+            <p th:class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">오류</p>
+        </div>
+        <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" th:field="*{password}" }>
+            <p th:class="field-error" th:errors="*{password}">오류</p>
+        </div>
+        <div class="form-group">
+            <label for="name">이름</label>
+            <input type="text" id="name" name="name" placeholder="이름을 입력하세요" th:field="*{name}">
+            <p th:class="field-error" th:errors="*{name}">오류</p>
+        </div>
+        <div class="form-group">
+            <label for="email">이메일</label>
+            <input type="email" id="email" name="email" placeholder="이메일을 입력하세요" th:field="*{email}">
+            <p th:class="field-error" th:errors="*{email}">오류</p>
+
+        </div>
+        <div class="form-group">
+            <label for="profileImage">프로필 이미지</label>
+            <input type="file" id="profileImage" name="profileImage" accept="image/*" th:field="*{profileImage}">
+        </div>
+        <div class="form-group">
+            <label for="posta_code">우편번호</label>
+            <input type="text" id="posta_code" name="posta_code" placeholder="우편번호를 입력하세요" th:field="*{postalCode}">
+            <p th:class="field-error" th:errors="*{postalCode}">오류</p>
+        </div>
+        <div class="form-group">
+            <label for="road_address">도로명 주소</label>
+            <input type="text" id="road_address" name="road_address" placeholder="도로명 주소를 입력하세요" th:field="*{roadAddress}">
+            <p th:class="field-error" th:errors="*{roadAddress}">오류</p>
+        </div>
+        <div class="form-group">
+            <label for="detail_address">상세 주소</label>
+            <input type="text" id="detail_address" name="detail_address" placeholder="상세 주소를 입력하세요" th:field="*{detailAddress}">
+            <p th:class="field-error" th:errors="*{detailAddress}">오류</p>
+        </div>
+        <button type="submit" class="btn">회원가입</button>
+    </form>
+</div>
+</body>
+</html>
