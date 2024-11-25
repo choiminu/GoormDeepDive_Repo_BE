@@ -1,15 +1,11 @@
 package com.product.domain.user.repository;
 
-import com.product.domain.user.dto.RequestUserUpdate;
-import com.product.domain.user.exception.DuplicateLoginIdException;
 import com.product.domain.user.model.User;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -28,15 +24,10 @@ public class UserRepository {
         return Optional.ofNullable(em.find(User.class, userId));
     }
 
-    public Optional<User> findByLoginId(String loginId) {
-        try {
-            User user = em.createQuery("SELECT u FROM User AS u WHERE loginId = :loginId", User.class)
+    public List<User> findByLoginId(String loginId) {
+        return em.createQuery("SELECT u FROM User AS u WHERE loginId = :loginId", User.class)
                     .setParameter("loginId", loginId)
-                    .getSingleResult();
-            return Optional.of(user);
-        } catch (NoResultException e) {
-            return Optional.empty();
-        }
+                    .getResultList();
     }
 
     public List<User> findAll() {

@@ -30,4 +30,8 @@ public class Address {
         this.readAddress = readAddress;
         this.detailAddress = detailAddress;
     }
+
+    public void addUser(User user) {
+        this.user = user;
+    }
 }

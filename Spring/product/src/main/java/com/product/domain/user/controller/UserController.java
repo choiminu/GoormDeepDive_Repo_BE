@@ -27,27 +27,15 @@ public class UserController {
     @PostMapping("/join")
     public String join(@Validated @ModelAttribute("join") RequestUserSave requestUserSave,
                        BindingResult bindingResult) {
-
         if (bindingResult.hasErrors()) {
             return "user/join";
         }
-
-        if (handleDuplicateLoginId(requestUserSave, bindingResult)) {
-            return "user/join";
-        }
-
-        userService.join(requestUserSave);
-        return "redirect:/";
-    }
-
-
-    private boolean handleDuplicateLoginId(RequestUserSave requestUserSave, BindingResult bindingResult) {
         try {
             userService.join(requestUserSave);
-            return false;
         } catch (DuplicateLoginIdException e) {
-            bindingResult.reject("duplicateLoginId", "이미 사용중인 아이디입니다.");
-            return true;
+            bindingResult.reject("duplicateLoginId", "이미 사용중인 아이디 입니다.");
+            return "user/join";
         }
+        return "redirect:/";
     }
 }

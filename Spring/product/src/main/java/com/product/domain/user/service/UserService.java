@@ -23,11 +23,28 @@ public class UserService {
 
     public User join(RequestUserSave requestUser) {
         validateDuplicateLoginId(requestUser.getLoginId());
-
         String profileUrl = fileStore.uploadFile(requestUser.getProfileImage());
         Address address = createAddress(requestUser);
+        User user = createUser(requestUser, profileUrl, address);
+        return userRepository.save(user);
+    }
 
-        User user = User.builder()
+    private void validateDuplicateLoginId(String loginId) {
+        if (!userRepository.findByLoginId(loginId).isEmpty()) {
+            throw new DuplicateLoginIdException(loginId + "는 이미 사용중입니다.");
+        }
+    }
+
+    private Address createAddress(RequestUserSave requestUser) {
+        return new Address(
+                requestUser.getPostalCode(),
+                requestUser.getRoadAddress(),
+                requestUser.getDetailAddress()
+        );
+    }
+
+    private User createUser(RequestUserSave requestUser, String profileUrl, Address address) {
+        return User.builder()
                 .loginId(requestUser.getLoginId())
                 .password(requestUser.getPassword())
                 .name(requestUser.getName())
@@ -38,21 +55,5 @@ public class UserService {
                 .createAt(LocalDateTime.now())
                 .last_login(LocalDateTime.now())
                 .build();
-
-        return userRepository.save(user);
-    }
-
-    private void validateDuplicateLoginId(String loginId) {
-        userRepository.findByLoginId(loginId).ifPresent(user -> {
-            throw new DuplicateLoginIdException(loginId);
-        });
-    }
-
-    private Address createAddress(RequestUserSave requestUser) {
-        return new Address(
-                requestUser.getPostalCode(),
-                requestUser.getRoadAddress(),
-                requestUser.getDetailAddress()
-        );
     }
 }

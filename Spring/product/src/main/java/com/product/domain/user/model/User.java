@@ -1,6 +1,5 @@
 package com.product.domain.user.model;
 
-import com.product.domain.user.dto.RequestUserUpdate;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -53,12 +52,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public void editMemberInformation(String password, String name, String email, String profileURL, Address address) {
-        this.password = password;
-        this.name = name;
-        this.email = email;
-        this.profileURL = profileURL;
+    public void addAddress(Address address) {
         this.addresses.add(address);
+        address.addUser(this);
     }
 
 }
