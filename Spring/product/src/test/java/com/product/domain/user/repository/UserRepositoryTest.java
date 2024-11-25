@@ -3,13 +3,13 @@ package com.product.domain.user.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.product.domain.user.exception.DuplicateLoginIdException;
+import com.product.domain.user.model.Address;
 import com.product.domain.user.model.Role;
 import com.product.domain.user.model.User;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,21 +26,20 @@ class UserRepositoryTest {
     private EntityManager entityManager;
 
     @Test
-    @DisplayName("회원 저장이 성공적으로 이루어진다")
-    void 회원_저장_성공() {
+    void 회원가입_성공() {
         // given
-        User user = createUser();
+        User user = createUser("hello");
 
         // when
         User savedUser = userRepository.save(user);
+        System.out.println("savedUser.getId() = " + savedUser.getId());
 
         // then
-        verifyUser(savedUser, "hello", "최민우", "1234", "alsdn4590@gmail.com", Role.USER);
+        verifyUser(savedUser, "hello", "test", "1234", "admin@gmail.com", Role.USER);
     }
 
     @Test
-    @DisplayName("중복된 회원 아이디로 인해 저장이 실패한다")
-    void 회원_저장_실패_중복_아이디() {
+    void 회원가입_실패_중복된_아이디() {
         // given
         User user1 = createUser("hello");
         User user2 = createUser("hello");
@@ -54,10 +53,9 @@ class UserRepositoryTest {
     }
 
     @Test
-    @DisplayName("회원 번호로 회원을 조회할 수 있다")
-    void 회원_번호로_조회_성공() {
+    void 회원조회_회원ID() {
         // given
-        User user = createUser();
+        User user = createUser("hello");
         userRepository.save(user);
         entityManager.flush();
 
@@ -66,14 +64,13 @@ class UserRepositoryTest {
 
         // then
         assertThat(foundUser).isPresent();
-        verifyUser(foundUser.get(), "hello", "최민우", "1234", "alsdn4590@gmail.com", Role.USER);
+        verifyUser(foundUser.get(), "hello", "test", "1234", "admin@gmail.com", Role.USER);
     }
 
     @Test
-    @DisplayName("회원 아이디로 회원을 조회할 수 있다")
-    void 회원_아이디로_조회_성공() {
+    void 회원조회_로그인ID() {
         // given
-        User user = createUser();
+        User user = createUser("hello");
         userRepository.save(user);
         entityManager.flush();
 
@@ -81,13 +78,11 @@ class UserRepositoryTest {
         Optional<User> foundUser = userRepository.findByLoginId(user.getLoginId());
 
         // then
-        assertThat(foundUser).isPresent();
-        verifyUser(foundUser.get(), "hello", "최민우", "1234", "alsdn4590@gmail.com", Role.USER);
+        assertThat(foundUser.get()).isEqualTo(user);
     }
 
     @Test
-    @DisplayName("모든 회원을 조회할 수 있다")
-    void 회원_전체_조회_성공() {
+    void 모든회원조회() {
         // given
         User user1 = createUser("hello");
         User user2 = createUser("world");
@@ -102,22 +97,37 @@ class UserRepositoryTest {
         assertThat(allUsers).contains(user1, user2);
     }
 
+    @Test
+    void 회원정보_수정() {
+        //given
+        User user = createUser("hello");
+        userRepository.save(user);
 
-    private User createUser() {
-        return createUser("hello");
+        //when
+        User updateDto = new User(user.getLoginId(), "1234", "테스터", "hdtv@kakao.com", "null", new Address("123","123","123"));
+        userRepository.update(user.getId(), updateDto);
+
+        //then
+        verifyUser(user, "hello", "테스터", "1234", "hdtv@kakao.com", Role.USER);
+
+    }
+
+    @Test
+    void 회원삭제() {
+        //given
+        User user = createUser("hello");
+        userRepository.save(user);
+
+        //when
+        userRepository.delete(user);
+
+        //then
+        Optional<User> foundUser = userRepository.findById(user.getId());
+        assertThat(foundUser.isEmpty()).isEqualTo(true);
     }
 
     private User createUser(String loginId) {
-        return User.builder()
-                .id(null)
-                .loginId(loginId)
-                .password("1234")
-                .name("최민우")
-                .email("alsdn4590@gmail.com")
-                .profileURL(null)
-                .role(Role.USER)
-                .addresses(null)
-                .build();
+        return new User(loginId, "1234", "test", "admin@gmail.com", "abc.png", new Address("123", "123", "444"));
     }
 
     private void verifyUser(User user, String loginId, String name, String password, String email, Role role) {
@@ -128,7 +138,5 @@ class UserRepositoryTest {
         assertThat(user.getPassword()).isEqualTo(password);
         assertThat(user.getEmail()).isEqualTo(email);
         assertThat(user.getRole()).isEqualTo(role);
-        assertThat(user.getProfileURL()).isNull();
-        assertThat(user.getAddresses()).isNull();
     }
 }

@@ -23,14 +23,17 @@ public class UserService {
 
     public User join(RequestUserSave requestUser) {
         validateDuplicateLoginId(requestUser.getLoginId());
+
         String profileUrl = fileStore.uploadFile(requestUser.getProfileImage());
         Address address = createAddress(requestUser);
         User user = createUser(requestUser, profileUrl, address);
+
         return userRepository.save(user);
     }
 
+
     private void validateDuplicateLoginId(String loginId) {
-        if (!userRepository.findByLoginId(loginId).isEmpty()) {
+        if (userRepository.findByLoginId(loginId).isPresent()) {
             throw new DuplicateLoginIdException(loginId + "는 이미 사용중입니다.");
         }
     }
@@ -44,16 +47,7 @@ public class UserService {
     }
 
     private User createUser(RequestUserSave requestUser, String profileUrl, Address address) {
-        return User.builder()
-                .loginId(requestUser.getLoginId())
-                .password(requestUser.getPassword())
-                .name(requestUser.getName())
-                .email(requestUser.getEmail())
-                .profileURL(profileUrl)
-                .role(Role.USER)
-                .addresses(List.of(address))
-                .createAt(LocalDateTime.now())
-                .last_login(LocalDateTime.now())
-                .build();
+        return new User(requestUser.getLoginId(), requestUser.getPassword(), requestUser.getName(),
+                requestUser.getEmail(), profileUrl, address);
     }
 }
