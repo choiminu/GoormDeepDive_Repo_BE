@@ -1,5 +1,6 @@
 package com.product.domain.user.service;
 
+import com.product.domain.user.dto.RequestUserLogin;
 import com.product.domain.user.dto.RequestUserSave;
 import com.product.domain.user.exception.DuplicateLoginIdException;
 import com.product.domain.user.model.Address;
@@ -9,6 +10,7 @@ import com.product.domain.user.repository.UserRepository;
 import com.product.utils.FileStore;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,5 +51,11 @@ public class UserService {
     private User createUser(RequestUserSave requestUser, String profileUrl, Address address) {
         return new User(requestUser.getLoginId(), requestUser.getPassword(), requestUser.getName(),
                 requestUser.getEmail(), profileUrl, address);
+    }
+
+    public User login(RequestUserLogin requestUserLogin) {
+        return userRepository.findByLoginId(requestUserLogin.getLoginId())
+                .filter(user -> user.getPassword().equals(requestUserLogin.getPassword()))
+                .orElse(null);
     }
 }

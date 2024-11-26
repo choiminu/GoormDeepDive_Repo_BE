@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>회원 상세 정보</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .detail-container {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+        }
+        .detail-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .detail-item {
+            margin-bottom: 15px;
+        }
+        .detail-item label {
+            font-weight: bold;
+            color: #555;
+        }
+        .detail-item p {
+            margin: 5px 0 0;
+            color: #333;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+        }
+        .btn {
+            padding: 10px 20px;
+            font-size: 14px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        .btn-secondary:hover {
+            background-color: #565e64;
+        }
+        .profile-image {
+            display: block;
+            margin: 0 auto 20px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+<div class="detail-container">
+    <h2>회원 상세 정보</h2>
+    <img class="profile-image" th:src="@{${member.profileImage}}" alt="프로필 이미지">
+    <div class="detail-item">
+        <label>아이디:</label>
+        <p th:text="${member.loginId}">sampleId</p>
+    </div>
+    <div class="detail-item">
+        <label>이름:</label>
+        <p th:text="${member.name}">홍길동</p>
+    </div>
+    <div class="detail-item">
+        <label>이메일:</label>
+        <p th:text="${member.email}">example@example.com</p>
+    </div>
+    <div class="detail-item">
+        <label>우편번호:</label>
+        <p th:text="${member.postalCode}">12345</p>
+    </div>
+    <div class="detail-item">
+        <label>도로명 주소:</label>
+        <p th:text="${member.roadAddress}">서울특별시 중구</p>
+    </div>
+    <div class="detail-item">
+        <label>상세 주소:</label>
+        <p th:text="${member.detailAddress}">123-45</p>
+    </div>
+    <div class="btn-group">
+        <a href="/members/edit" class="btn">수정</a>
+        <a href="/members/delete" class="btn btn-secondary" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+    </div>
+</div>
+</body>
+</html>
