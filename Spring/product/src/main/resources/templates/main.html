@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>홈페이지</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        /* 최상단 네비게이션 바 스타일 */
+        .navbar {
+            background-color: #007bff;
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .navbar .menu {
+            display: flex;
+            gap: 15px;
+        }
+
+        .navbar .menu a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .navbar .menu a:hover {
+            text-decoration: underline;
+        }
+
+        /* 검색과 필터 */
+        .filter-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .filter-container select,
+        .filter-container input[type="text"],
+        .filter-container button {
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .filter-container button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .filter-container button:hover {
+            background-color: #0056b3;
+        }
+
+        /* 상품 목록 스타일 */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .product-card h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .product-card p {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        .product-card .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .product-card .btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 15px;
+            font-size: 14px;
+            color: #fff;
+            background-color: #007bff;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        .product-card .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="/" class="logo">MyShop</a>
+
+    <!-- 메뉴 (로그인하지 않은 경우) -->
+    <div class="menu" th:if="${isLogin == false}">
+        <a href="/">홈</a>
+        <a href="/login">로그인</a>
+        <a href="/signup">회원가입</a>
+    </div>
+
+    <!-- 메뉴 (로그인한 경우) -->
+    <div class="menu" th:if="${isLogin == true}">
+        <a href="/">홈</a>
+        <a href="/logout">로그아웃</a>
+    </div>
+</div>
+
+<!-- 필터와 검색 -->
+<div class="filter-container">
+    <form th:action="@{/products/filter}" method="get">
+        <select name="categoryId">
+            <option value="">전체 카테고리</option>
+            <option th:each="category : ${categories}"
+                    th:value="${category.id}"
+                    th:text="${category.name}">카테고리</option>
+        </select>
+        <input type="text" name="search" placeholder="상품명을 입력하세요">
+        <button type="submit">검색</button>
+    </form>
+</div>
+
+<!-- 상품 목록 -->
+<div class="container">
+    <div th:each="product : ${products}" class="product-card">
+        <img th:src="@{${product.imageUrl}}" alt="상품 이미지">
+        <h3 th:text="${product.productName}">상품 이름</h3>
+        <p th:text="${product.description}">상품 설명</p>
+        <p class="price" th:text="${product.price + '원'}">0원</p>
+        <a th:href="@{/product/{id}(id=${product.id})}" class="btn">자세히 보기</a>
+    </div>
+</div>
+
+</body>
+</html>

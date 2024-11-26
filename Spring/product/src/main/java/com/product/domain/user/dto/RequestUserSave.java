@@ -16,6 +16,7 @@ public class RequestUserSave {
     private String name;
     @NotBlank
     private String email;
+
     private MultipartFile profileImage;
     @NotBlank
     private String postalCode;
