@@ -12,18 +12,17 @@ import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootTest
-@Transactional
+@DataJpaTest
+@Import({UserRepository.class})
 class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private EntityManager entityManager;
 
     @Test
     void 회원가입_성공() {
@@ -32,7 +31,6 @@ class UserRepositoryTest {
 
         // when
         User savedUser = userRepository.save(user);
-        System.out.println("savedUser.getId() = " + savedUser.getId());
 
         // then
         verifyUser(savedUser, "hello", "test", "1234", "admin@gmail.com", Role.USER);
@@ -53,11 +51,10 @@ class UserRepositoryTest {
     }
 
     @Test
-    void 회원조회_회원ID() {
+    void 회원ID_회원조회() {
         // given
         User user = createUser("hello");
         userRepository.save(user);
-        entityManager.flush();
 
         // when
         Optional<User> foundUser = userRepository.findById(user.getId());
@@ -68,21 +65,21 @@ class UserRepositoryTest {
     }
 
     @Test
-    void 회원조회_로그인ID() {
+    void 로그인ID_회원조회() {
         // given
         User user = createUser("hello");
         userRepository.save(user);
-        entityManager.flush();
 
         // when
         Optional<User> foundUser = userRepository.findByLoginId(user.getLoginId());
 
         // then
-        assertThat(foundUser.get()).isEqualTo(user);
+        assertThat(foundUser).isPresent();
+        verifyUser(foundUser.get(), "hello", "test", "1234", "admin@gmail.com", Role.USER);
     }
 
     @Test
-    void 모든회원조회() {
+    void 모든_회원조회() {
         // given
         User user1 = createUser("hello");
         User user2 = createUser("world");
@@ -104,16 +101,15 @@ class UserRepositoryTest {
         userRepository.save(user);
 
         //when
-        User updateDto = new User(user.getLoginId(), "1234", "테스터", "hdtv@kakao.com", "null", new Address("123","123","123"));
+        User updateDto = new User(user.getLoginId(), "1234", "테스터", "hdtv@kakao.com", "null", new Address("123", "123", "123"));
         userRepository.update(user.getId(), updateDto);
 
         //then
         verifyUser(user, "hello", "테스터", "1234", "hdtv@kakao.com", Role.USER);
-
     }
 
     @Test
-    void 회원삭제() {
+    void 회원정보_삭제() {
         //given
         User user = createUser("hello");
         userRepository.save(user);
@@ -127,7 +123,14 @@ class UserRepositoryTest {
     }
 
     private User createUser(String loginId) {
-        return new User(loginId, "1234", "test", "admin@gmail.com", "abc.png", new Address("123", "123", "444"));
+        return new User(loginId,
+                "1234",
+                "test",
+                "admin@gmail.com",
+                "abc.png",
+                new Address("123",
+                        "123",
+                        "444"));
     }
 
     private void verifyUser(User user, String loginId, String name, String password, String email, Role role) {
