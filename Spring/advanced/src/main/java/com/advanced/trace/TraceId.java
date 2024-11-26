@@ -16,11 +16,11 @@ public class TraceId {
         this.level = level;
     }
 
-    private TraceId createNextId() {
+    public TraceId createNextId() {
         return new TraceId(id, level + 1);
     }
 
-    private TraceId cretePreviousId() {
+    public TraceId cretePreviousId() {
         return new TraceId(id, level - 1);
     }
 
