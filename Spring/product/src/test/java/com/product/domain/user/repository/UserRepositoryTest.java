@@ -79,6 +79,19 @@ class UserRepositoryTest {
     }
 
     @Test
+    void 로그인ID_회원조회_실패() {
+        // given
+        User user = createUser("hello");
+        userRepository.save(user);
+
+        // when
+        Optional<User> foundUser = userRepository.findByLoginId("1234");
+
+        // then
+        assertThat(foundUser).isEmpty();
+    }
+
+    @Test
     void 모든_회원조회() {
         // given
         User user1 = createUser("hello");

@@ -4,7 +4,7 @@ import com.product.domain.user.model.Address;
 import lombok.Data;
 
 @Data
-public class RequestUserUpdate {
+public class UserUpdateRequest {
     private String password;
     private String nam;
     private String email;

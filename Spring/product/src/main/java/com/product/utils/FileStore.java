@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class FileStore {
+
     @Value("${file.dir}")
     public String fileStore;
 
