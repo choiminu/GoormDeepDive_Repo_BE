@@ -78,10 +78,10 @@ public class User {
         }
     }
 
-    public Address getAddress() {
+    public String getAddress() {
         for (Address address : addresses) {
             if (address.isPrimary()) {
-                return address;
+                return address.getAddress();
             }
         }
         return null;

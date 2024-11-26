@@ -105,7 +105,8 @@
     <!-- 회원 정보 -->
     <div class="section">
         <div class="profile">
-            <img class="profile-image" th:src="@{${user.profileURL}}" alt="프로필 이미지">
+            <img class="profile-image" th:src="@{/image/{profileURL}(profileURL=${user.profileURL})}" alt="프로필 이미지">
+
             <div class="profile-details">
                 <h1 th:text="${user.name}">홍길동</h1>
                 <div class="detail-item">

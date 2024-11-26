@@ -7,6 +7,7 @@ import com.product.domain.user.model.Address;
 import com.product.domain.user.model.User;
 import com.product.domain.user.repository.UserRepository;
 import com.product.utils.FileStore;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,5 +45,9 @@ public class UserService {
         return userRepository.findByLoginId(userLoginRequest.getLoginId())
                 .filter(user -> user.getPassword().equals(userLoginRequest.getPassword()))
                 .orElse(null);
+    }
+
+    public User findById(Long id) {
+        return userRepository.findById(id).orElse(null);
     }
 }

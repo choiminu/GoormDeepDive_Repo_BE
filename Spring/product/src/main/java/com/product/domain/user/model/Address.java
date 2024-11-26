@@ -25,17 +25,21 @@ public class Address {
 
     private String postalCode;
 
-    private String readAddress;
+    private String roadAddress;
 
     private String detailAddress;
 
     private boolean isPrimary;
 
-    public Address(String postalCode, String readAddress, String detailAddress) {
+    public Address(String postalCode, String roadAddress, String detailAddress) {
         this.postalCode = postalCode;
-        this.readAddress = readAddress;
+        this.roadAddress = roadAddress;
         this.detailAddress = detailAddress;
         this.isPrimary = true;
+    }
+
+    public String getAddress() {
+        return roadAddress + postalCode;
     }
 
     public boolean isPrimary() {
