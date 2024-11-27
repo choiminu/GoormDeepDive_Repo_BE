@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,7 +25,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "users")
 public class User {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "user_id")
     private Long id;
 
@@ -74,6 +76,15 @@ public class User {
         if (name != null) {
             this.name = name;
         }
+    }
+
+    public String getAddress() {
+        for (Address address : addresses) {
+            if (address.isPrimary()) {
+                return address.getAddress();
+            }
+        }
+        return null;
     }
 
     public void addAddress(Address address) {

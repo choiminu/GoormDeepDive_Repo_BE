@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class FileStore {
+
     @Value("${file.dir}")
     public String fileStore;
 
@@ -19,7 +20,7 @@ public class FileStore {
 
     public String uploadFile(MultipartFile multipartFile) {
         if (multipartFile.isEmpty()) {
-            return null;
+            return "x";
         }
         String originalFilename = multipartFile.getOriginalFilename();
         String storeFileName = createStoreFileName(originalFilename);

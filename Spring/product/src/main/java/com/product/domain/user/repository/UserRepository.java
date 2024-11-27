@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -17,10 +18,11 @@ public class UserRepository {
     private final EntityManager em;
 
     public User save(User user) {
-        if (!findByLoginId(user.getLoginId()).isEmpty()) {
-            throw new DuplicateLoginIdException(user.getLoginId() + "는 이미 사용중입니다.");
+        try {
+            em.persist(user);
+        } catch (ConstraintViolationException e) {
+            throw new DuplicateLoginIdException(e);
         }
-        em.persist(user);
         return user;
     }
 
