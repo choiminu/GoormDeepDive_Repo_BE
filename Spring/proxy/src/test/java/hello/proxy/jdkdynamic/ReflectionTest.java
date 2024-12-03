@@ -1,4 +1,4 @@
-package hello.proxy.pureporoxy.jdkdynamic;
+package hello.proxy.jdkdynamic;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

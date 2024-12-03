@@ -1,4 +1,4 @@
-package hello.proxy.pureporoxy.jdkdynamic.code;
+package hello.proxy.jdkdynamic.code;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
